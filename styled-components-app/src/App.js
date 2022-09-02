@@ -2,22 +2,35 @@ import styled, { keyframes } from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Emoji = styled.span`
+  font-size: 36px;
 `;
 
 const Box = styled.div`
   height: 200px;
   width: 200px;
   background-color: tomato;
-
-  &:hover {
-    background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${Emoji}:hover {
+    font-size: 98px;
   }
 `;
 
 function App() {
   return (
-    <Wrapper as="header">
-      <Box></Box>
+    <Wrapper>
+      <Box>
+        <Emoji>🤩</Emoji>
+      </Box>
+      <Emoji>🔥</Emoji>
     </Wrapper>
   );
 }
