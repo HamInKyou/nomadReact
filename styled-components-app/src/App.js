@@ -9,21 +9,15 @@ const Box = styled.div`
   width: 200px;
   background-color: tomato;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  span {
-    font-size: 40px;
+  &:hover {
+    background-color: yellow;
   }
 `;
 
 function App() {
   return (
     <Wrapper as="header">
-      <Box>
-        <span>😊</span>
-      </Box>
+      <Box></Box>
     </Wrapper>
   );
 }
