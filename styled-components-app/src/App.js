@@ -4,25 +4,26 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const rotationAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
 const Box = styled.div`
   height: 200px;
   width: 200px;
   background-color: tomato;
-  animation: ${rotationAnimation} 1s linear infinite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 40px;
+  }
 `;
 
 function App() {
   return (
     <Wrapper as="header">
-      <Box />
+      <Box>
+        <span>😊</span>
+      </Box>
     </Wrapper>
   );
 }
