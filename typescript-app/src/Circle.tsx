@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 interface ContainerProps {
@@ -15,18 +16,16 @@ const Container = styled.div<ContainerProps>`
 
 interface CircleProps {
   bgColor: string;
-  borderColor?: string; // optional Props -> undefined로 보내줘도 된다!
+  borderColor?: string;
   text?: string;
 }
 
-// 구조분해할 때, default값을 동시에 지정해줄 수 있다!
 function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
+  const [value, setValue] = useState<string>(""); //useState<type>를 통해 state의 타입을 지정할 수 있다! or 초기값을 지정해주면 자동으로 초기값의 타입으로 state의 타입을 지정한다.
   return (
-    // ?? 연산을 통해 borderColor가 undefined로 넘어왔을 경우 bgColor를 기본값으로 borderColor에 설정해주기!
     <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
       {text}
     </Container>
   );
 }
-
 export default Circle;
