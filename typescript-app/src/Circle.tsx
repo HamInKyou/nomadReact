@@ -1,20 +1,32 @@
 import styled from "styled-components";
 
-interface CircleProps {
+interface ContainerProps {
   bgColor: string;
+  borderColor: string;
 }
 
-/** 인터페이스를 styled component에 적용하고 싶을 땐, <> 안에 담자! */
-const Container = styled.div<CircleProps>`
+const Container = styled.div<ContainerProps>`
   width: 200px;
   height: 200px;
   background-color: ${(props) => props.bgColor};
   border-radius: 100px;
+  border: 1px solid ${(props) => props.borderColor};
 `;
 
-/** 인터페이스를 컴포넌트에 적용하고 싶을 때, object : interface 로 인자의 타입을 지정해주자*/
-function Circle({ bgColor }: CircleProps) {
-  return <Container bgColor={bgColor} />;
+interface CircleProps {
+  bgColor: string;
+  borderColor?: string; // optional Props -> undefined로 보내줘도 된다!
+  text?: string;
+}
+
+// 구조분해할 때, default값을 동시에 지정해줄 수 있다!
+function Circle({ bgColor, borderColor, text = "default text" }: CircleProps) {
+  return (
+    // ?? 연산을 통해 borderColor가 undefined로 넘어왔을 경우 bgColor를 기본값으로 borderColor에 설정해주기!
+    <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+      {text}
+    </Container>
+  );
 }
 
 export default Circle;
