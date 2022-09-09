@@ -148,7 +148,10 @@ function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceData>(
     ["tickers", coinId],
-    () => fetchCoinTickers(`${coinId}`)
+    () => fetchCoinTickers(`${coinId}`),
+    {
+      refetchInterval: 5000, //세번째 인자는 옵션, 인터벌로 5초마다 리프레시하게 만듬
+    }
   );
   const loading = infoLoading || tickersLoading;
 
