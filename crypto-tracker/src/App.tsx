@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "./Router";
 import { createGlobalStyle } from "styled-components";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // createGlobalStyle로 컴포넌트를 만들 수 있는데,
 // 렌더링 될 때 이 컴포넌트는 전역 스코프에 스타일을 올려준다.
@@ -67,6 +68,7 @@ function App() {
     <>
       {/* 얘는 다른 컴포넌트를 감싸지 않아도 돼. 그저 렌더링될 때 전역 스코프에 스타일 올려준다! */}
       <GlobalStyle></GlobalStyle>
+      <ReactQueryDevtools initialIsOpen={true} />
       <Router></Router>
     </>
   );
