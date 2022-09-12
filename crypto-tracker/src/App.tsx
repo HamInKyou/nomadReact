@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Router from "./Router";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { darkTheme, lightTheme } from "./theme";
 
 // createGlobalStyle로 컴포넌트를 만들 수 있는데,
 // 렌더링 될 때 이 컴포넌트는 전역 스코프에 스타일을 올려준다.
@@ -64,12 +65,16 @@ a {
 `;
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
-      {/* 얘는 다른 컴포넌트를 감싸지 않아도 돼. 그저 렌더링될 때 전역 스코프에 스타일 올려준다! */}
-      <GlobalStyle></GlobalStyle>
-      <ReactQueryDevtools initialIsOpen={true} />
-      <Router></Router>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <button onClick={toggleDark}>Toggle Mode</button>
+        <GlobalStyle />
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
