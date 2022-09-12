@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -70,6 +72,9 @@ function Coins() {
   //첫번째 인자는 query의 고유 식별자, 두번째 인자는 fetch promise를 리턴하는 함수
   // useQuery를 통해 fetch한 데이터는 캐시에 남아 새로고침하지 않는 한 클라이언트에 유지됨!
 
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
+
   return (
     <Container>
       <Helmet>
@@ -77,6 +82,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDarkAtom}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

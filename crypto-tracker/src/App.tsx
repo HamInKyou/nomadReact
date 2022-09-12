@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Router from "./Router";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
