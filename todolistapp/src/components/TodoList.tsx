@@ -1,14 +1,31 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { atom, useRecoilState } from "recoil";
 
 interface IForm {
   toDo: string;
 }
 
+interface IToDo {
+  text: string;
+  id: number;
+  category: "TO_DO" | "DOING" | "DONE";
+}
+
+const toDoState = atom<IToDo[]>({
+  key: "toDo",
+  default: [],
+});
+
 function ToDoList() {
+  //useRecoilState는 useState훅 처럼, 상태와 상태를 변경할 수 있는 함수를 리턴
+  const [toDos, setToDos] = useRecoilState(toDoState);
   const { register, handleSubmit, setValue } = useForm<IForm>();
-  const onSubmit = (data: IForm) => {
-    console.log("add to do", data.toDo);
+  const onSubmit = ({ toDo }: IForm) => {
+    setToDos((oldToDos) => [
+      { text: toDo, id: Date.now(), category: "TO_DO" },
+      ...oldToDos,
+    ]);
     setValue("toDo", "");
   };
   return (
@@ -24,7 +41,11 @@ function ToDoList() {
         />
         <button>Add</button>
       </form>
-      <ul></ul>
+      <ul>
+        {toDos.map((toDo) => (
+          <li key={toDo.id}>{toDo.text}</li>
+        ))}
+      </ul>
     </div>
   );
 }
