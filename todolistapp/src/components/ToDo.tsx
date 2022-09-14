@@ -1,24 +1,33 @@
 import React from "react";
-import { IToDo } from "../atoms";
+import { useSetRecoilState } from "recoil";
+import { IToDo, toDoState } from "../atoms";
 
-function ToDo({ text, category }: IToDo) {
-  //interface["속성"]을 통해서 특정 속성의 타입을 뽑아낼 수 있다.
+function ToDo({ text, category, id }: IToDo) {
+  const setToDos = useSetRecoilState(toDoState);
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
     } = event;
-    console.log("i wanna to ", name);
+    setToDos((oldToDos) => {
+      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      const newToDo = { text, id, category: name as any };
+      return [
+        ...oldToDos.slice(0, targetIndex), //0부터 target-1까지
+        newToDo,
+        ...oldToDos.slice(targetIndex + 1), //두번째 인자 입력 안하면 첫번째 인자부터 끝까지
+      ];
+    });
   };
   return (
     <li>
       <span>{text}</span>
       {category !== "DOING" && (
-        <button name="DOING " onClick={onClick}>
+        <button name="DOING" onClick={onClick}>
           Doing
         </button>
       )}
       {category !== "TO_DO" && (
-        <button name="TO_DO " onClick={onClick}>
+        <button name="TO_DO" onClick={onClick}>
           To Do
         </button>
       )}
