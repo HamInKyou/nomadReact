@@ -8,6 +8,7 @@ interface IForm {
   userName: string;
   password: string;
   passwordConf: string;
+  extraError?: string; //input항목에 종속적이지 않은, form 전체에 해당하는 에러 설정하기 위해
 }
 
 function ToDoList() {
@@ -28,6 +29,8 @@ function ToDoList() {
       //에러를 발생시켜줬다!
       return setError("passwordConf", { message: "password are not same" });
     }
+    //폼 전체에 해당하는 에러를 발생시켰다.
+    setError("extraError", { message: "server offline" });
   };
   return (
     <div>
@@ -83,6 +86,7 @@ function ToDoList() {
         />
         <span>{errors?.passwordConf?.message}</span>
         <button>Add</button>
+        <span>{errors?.extraError?.message}</span>
       </form>
     </div>
   );
