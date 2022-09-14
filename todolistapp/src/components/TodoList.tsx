@@ -11,7 +11,7 @@ function ToDoList() {
     const {
       currentTarget: { value },
     } = event;
-    setCategory(value);
+    setCategory(value as any);
   };
 
   return (
