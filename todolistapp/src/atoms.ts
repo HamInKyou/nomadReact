@@ -24,10 +24,7 @@ export const toDoSelector = selector({
   get: ({ get }) => {
     //get메소드는 options를 인자로 받으면서 호출되는데, 이 options object 안에는 get이라는 메소드가 들어가있다.
     const toDos = get(toDoState); //options로 받은 get 메소드를 통해 selector의 내부로 atom을 들고올 수 있다.
-    return [
-      toDos.filter((toDo) => toDo.category === "TO_DO"),
-      toDos.filter((toDo) => toDo.category === "DOING"),
-      toDos.filter((toDo) => toDo.category === "DONE"),
-    ];
+    const category = get(categoryState);
+    return toDos.filter((toDo) => toDo.category === category);
   },
 });
