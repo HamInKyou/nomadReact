@@ -1,6 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
+interface IForm {
+  email: string;
+  firstName: string;
+  lastName?: string;
+  userName: string;
+  password: string;
+  passwordConf: string;
+}
+
 function ToDoList() {
   //register는 input요소를 Form에 등록시키는 함수, input에 대한 name, 이벤트 핸들러 등 리턴
   //formState는 form 상태에 대한 object
@@ -8,8 +17,12 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onValid = (data: any) => {
+  } = useForm<IForm>({
+    defaultValues: {
+      email: "@naver.com",
+    },
+  });
+  const onValid = (data: IForm) => {
     console.log(data);
   };
   return (
@@ -30,44 +43,41 @@ function ToDoList() {
           })}
           placeholder="Email"
         />
-        <span>{errors?.email?.message as string}</span>
+        <span>{errors?.email?.message}</span>
         <input
-          {...register("FirstName", { required: "First Name is required" })}
+          {...register("firstName", { required: "First Name is required" })}
           placeholder="First Name"
         />
-        <span>{errors?.FirstName?.message as string}</span>
-        <input
-          {...register("LastName", { required: "Last Name is required" })}
-          placeholder="Last Name"
-        />
-        <span>{errors?.LastName?.message as string}</span>
+        <span>{errors?.firstName?.message}</span>
+        <input {...register("lastName")} placeholder="Last Name" />
+        <span>{errors?.lastName?.message}</span>
         <input
           // 최소 10글자 이상 되게 validation 주는 방법
-          {...register("Username", {
+          {...register("userName", {
             required: "Username is required",
             minLength: 10,
           })}
           placeholder="Username"
         />
-        <span>{errors?.Username?.message as string}</span>
+        <span>{errors?.userName?.message}</span>
         <input
           //validation 속성에 그 속성에 대한 에러메세지 넣을 수 있다.
-          {...register("Password", {
+          {...register("password", {
             required: "password is required",
             minLength: 5,
           })}
           placeholder="Password"
         />
-        <span>{errors?.Password?.message as string}</span>
+        <span>{errors?.password?.message}</span>
         <input
           //minLength같이 필요한 값도 있는 경우 object형식으로 값과 메세지를 같이 담을 수 있다.
-          {...register("PasswordConf", {
+          {...register("passwordConf", {
             required: "passwordConf is required",
             minLength: { value: 5, message: "your password is too short" },
           })}
           placeholder="PasswordConf"
         />
-        <span>{errors?.PasswordConf?.message as string}</span>
+        <span>{errors?.passwordConf?.message}</span>
         <button>Add</button>
       </form>
     </div>
