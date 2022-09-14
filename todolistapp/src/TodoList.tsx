@@ -56,7 +56,14 @@ function ToDoList() {
         />
         <span>{errors?.email?.message}</span>
         <input
-          {...register("firstName", { required: "First Name is required" })}
+          {...register("firstName", {
+            required: "First Name is required",
+            //validate에서 true를 리턴하면 통과
+            //false를 리턴하면 validate 에러
+            //문자열을 리턴하면 그건 에러 메세지!
+            validate: (value) =>
+              value.includes("nico") ? "no nicos allowed" : true,
+          })}
           placeholder="First Name"
         />
         <span>{errors?.firstName?.message}</span>
