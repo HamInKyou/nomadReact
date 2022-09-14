@@ -17,13 +17,17 @@ function ToDoList() {
         style={{ display: "flex", flexDirection: "column" }}
         onSubmit={handleSubmit(onValid)}
       >
-        {/*
-        validation 해보기
-        두번째 인자로 여러 validation 옵션 적용시켜줄 수 있다.
-        validation에 걸리면 해당 input으로 자동으로 포커싱되게 해준다!
-        validation에 걸리기 때문에 onValid 호출 안함!
-        */}
-        <input {...register("email", { required: true })} placeholder="Email" />
+        <input
+          //pattern에 정규식 넣어 패턴에 일치하는 경우만 허락할 수 있다.
+          {...register("email", {
+            required: true,
+            pattern: {
+              value: /^[A-Za-z0-9._%+-]+@naver.com$/,
+              message: "Only naver.com emails allowed",
+            },
+          })}
+          placeholder="Email"
+        />
         <input
           {...register("First Name", { required: true })}
           placeholder="First Name"
