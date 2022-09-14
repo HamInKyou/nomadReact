@@ -38,11 +38,19 @@ function ToDoList() {
           placeholder="Username"
         />
         <input
-          {...register("Password", { required: true, minLength: 5 })}
+          //validation 속성에 그 속성에 대한 에러메세지 넣을 수 있다.
+          {...register("Password", {
+            required: "password is required",
+            minLength: 5,
+          })}
           placeholder="Password"
         />
         <input
-          {...register("PasswordConf", { required: true, minLength: 5 })}
+          //minLength같이 필요한 값도 있는 경우 object형식으로 값과 메세지를 같이 담을 수 있다.
+          {...register("PasswordConf", {
+            required: "password is required",
+            minLength: { value: 5, message: "your password is too short" },
+          })}
           placeholder="PasswordConf"
         />
         <button>Add</button>
