@@ -4,11 +4,15 @@ import { useForm } from "react-hook-form";
 function ToDoList() {
   //register는 input요소를 Form에 등록시키는 함수, input에 대한 name, 이벤트 핸들러 등 리턴
   //watch는 등록된 input요소들의 변경사항을 객체로 묶어 리턴해주는 함수
-  const { register, watch } = useForm();
+  const { register, watch, handleSubmit } = useForm();
+  const onValid = (data: any) => {
+    console.log(data);
+  };
   console.log(watch());
   return (
     <div>
-      <form>
+      {/* handleSubmit에서 유효성검사를 진행, 문제 없을 경우 onValid 실행 */}
+      <form onSubmit={handleSubmit(onValid)}>
         {/* register 함수를 통해 각 input을 등록해줬다. */}
         <input {...register("email")} placeholder="Email" />
         <input {...register("First Name")} placeholder="First Name" />
