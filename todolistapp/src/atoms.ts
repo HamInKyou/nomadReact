@@ -1,16 +1,21 @@
 import { atom, selector } from "recoil";
 
-type categories = "TO_DO" | "DOING" | "DONE";
+//enum은 숫자를 문자열로 표현한 것! 차례대로 0, 1, 2 ....
+export enum Categories {
+  "TO_DO", // 0 -> "TO_DO" = "TO_DO" 이렇게 하면 숫자로 표현되는게 아니라 문자열로 표현됨
+  "DOING", // 1
+  "DONE", // 2
+}
 
 export interface IToDo {
   text: string;
   id: number;
-  category: categories;
+  category: Categories;
 }
 
-export const categoryState = atom<categories>({
+export const categoryState = atom<Categories>({
   key: "category",
-  default: "TO_DO",
+  default: Categories.TO_DO,
 });
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
