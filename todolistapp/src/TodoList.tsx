@@ -17,13 +17,17 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
+    setError, //에러를 발생시켜준다.
   } = useForm<IForm>({
     defaultValues: {
       email: "@naver.com",
     },
   });
   const onValid = (data: IForm) => {
-    console.log(data);
+    if (data.password !== data.passwordConf) {
+      //에러를 발생시켜줬다!
+      return setError("passwordConf", { message: "password are not same" });
+    }
   };
   return (
     <div>
