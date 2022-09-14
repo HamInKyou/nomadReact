@@ -61,8 +61,12 @@ function ToDoList() {
             //validate에서 true를 리턴하면 통과
             //false를 리턴하면 validate 에러
             //문자열을 리턴하면 그건 에러 메세지!
-            validate: (value) =>
-              value.includes("nico") ? "no nicos allowed" : true,
+            validate: {
+              noNico: (value) =>
+                value.includes("nico") ? "no nicos allowed" : true,
+              noNick: (value) =>
+                value.includes("nico") ? "no nicks allowed" : true,
+            },
           })}
           placeholder="First Name"
         />
