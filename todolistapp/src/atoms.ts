@@ -1,10 +1,11 @@
 import { atom, selector } from "recoil";
 
-//enum은 숫자를 문자열로 표현한 것! 차례대로 0, 1, 2 ....
+//enum은 숫자를 문자열로 표현한 것! 차례대로 0, 1, 2 ...
+//"문자열" = "문자열" 로 하면 문자열 자체로 의미할 수 있다.
 export enum Categories {
-  "TO_DO", // 0 -> "TO_DO" = "TO_DO" 이렇게 하면 숫자로 표현되는게 아니라 문자열로 표현됨
-  "DOING", // 1
-  "DONE", // 2
+  "TO_DO" = "TO_DO",
+  "DOING" = "DOING",
+  "DONE" = "DONE",
 }
 
 export interface IToDo {
