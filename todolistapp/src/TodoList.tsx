@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 
 function ToDoList() {
   //register는 input요소를 Form에 등록시키는 함수, input에 대한 name, 이벤트 핸들러 등 리턴
-  //watch는 등록된 input요소들의 변경사항을 객체로 묶어 리턴해주는 함수
-  const { register, watch, handleSubmit } = useForm();
+  //formState는 form 상태에 대한 object
+  const { register, handleSubmit, formState } = useForm();
   const onValid = (data: any) => {
     console.log(data);
   };
-  console.log(watch());
+  //formState.errors는 validation에서 걸렸을 때 그 에러 상황이 담긴 object
+  console.log(formState.errors);
   return (
     <div>
       {/* handleSubmit에서 유효성검사를 진행, 문제 없을 경우 onValid 실행 */}
