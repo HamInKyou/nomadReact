@@ -27,7 +27,11 @@ function ToDoList() {
   const onValid = (data: IForm) => {
     if (data.password !== data.passwordConf) {
       //에러를 발생시켜줬다!
-      return setError("passwordConf", { message: "password are not same" });
+      return setError(
+        "passwordConf",
+        { message: "password are not same" },
+        { shouldFocus: true } //에러 발생시키고 해당 input 포커스시키기
+      );
     }
     //폼 전체에 해당하는 에러를 발생시켰다.
     setError("extraError", { message: "server offline" });
