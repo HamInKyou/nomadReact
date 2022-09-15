@@ -9,7 +9,8 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Box = styled.div`
+//motion에서 들고온 element를 스타일드 컴포넌트로 만드려면 다음과 같이 상속받아서 써.
+const Box = styled(motion.div)`
   width: 200px;
   height: 200px;
   background-color: white;
@@ -21,8 +22,6 @@ function App() {
   return (
     <Wrapper>
       <Box />
-      {/* framer-motion의 animate 기능을 활용하려면 motion에서 가져온 element를 사용해야해! */}
-      <motion.div></motion.div>
     </Wrapper>
   );
 }
