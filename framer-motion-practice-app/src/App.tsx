@@ -18,7 +18,6 @@ const BiggerBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 `;
 
 const Box = styled(motion.div)`
@@ -42,6 +41,7 @@ function App() {
         <Box
           drag
           dragSnapToOrigin //드래그 손 떼면 제일 처음 본래 위치로 돌아가게
+          dragElastic={0.5} //범위 밖으로 땅길 수 있는 힘, 1이면 드래그 하는대로 밖으로 끌어지고, 0이면 범위 밖으로 절대 안끌려짐(설정 안한 default값은 0.5, 0~1사이의 값)
           dragConstraints={biggerBoxRef}
           variants={boxVariants}
           whileHover="hover" //호버하면 실행할 에니메이션
