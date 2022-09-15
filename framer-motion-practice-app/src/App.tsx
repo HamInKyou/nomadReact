@@ -21,7 +21,10 @@ const Box = styled(motion.div)`
 function App() {
   return (
     <Wrapper>
-      <Box />
+      <Box
+        transition={{ delay: 1, duration: 0.5 }}
+        animate={{ borderRadius: "100px" }}
+      />
     </Wrapper>
   );
 }
