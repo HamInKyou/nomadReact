@@ -26,7 +26,10 @@ function App() {
   return (
     <Wrapper>
       <Box
-        drag="x" //x축으로만 드래그 가능함, "y"로하면 y축으로만 드래그 가능
+        drag
+        //이 범위를 벗어날 수 없음, 드래그해서 벗어나려고 하면 범위 내 갈 수 있는데 까지로 돌아옴.
+        //범위 안에선 자유로움
+        dragConstraints={{ top: -50, bottom: 50, left: -50, right: 50 }}
         variants={boxVariants}
         whileHover="hover" //호버하면 실행할 에니메이션
         whileTap="click" //클릭하는 동안 실행할 애니메이션
