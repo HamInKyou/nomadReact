@@ -41,8 +41,7 @@ function App() {
       <BiggerBox ref={biggerBoxRef}>
         <Box
           drag
-          //이 범위를 벗어날 수 없음, 드래그해서 벗어나려고 하면 범위 내 갈 수 있는데 까지로 돌아옴.
-          //범위 안에선 자유로움
+          dragSnapToOrigin //드래그 손 떼면 제일 처음 본래 위치로 돌아가게
           dragConstraints={biggerBoxRef}
           variants={boxVariants}
           whileHover="hover" //호버하면 실행할 에니메이션
