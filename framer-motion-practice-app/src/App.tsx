@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -20,6 +21,8 @@ function App() {
   return (
     <Wrapper>
       <Box />
+      {/* framer-motion의 animate 기능을 활용하려면 motion에서 가져온 element를 사용해야해! */}
+      <motion.div></motion.div>
     </Wrapper>
   );
 }
