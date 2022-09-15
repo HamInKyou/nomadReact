@@ -22,8 +22,9 @@ function App() {
   return (
     <Wrapper>
       <Box
-        transition={{ delay: 1, duration: 0.5 }}
-        animate={{ borderRadius: "100px" }}
+        transition={{ type: "spring" }} //전환 설정. 다양한 옵션 있음
+        initial={{ scale: 0 }} //초기 상태
+        animate={{ scale: 1, rotateZ: 360 }} //끝 상태
       />
     </Wrapper>
   );
