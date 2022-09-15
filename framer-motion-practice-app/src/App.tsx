@@ -18,14 +18,18 @@ const Box = styled(motion.div)`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
+// 애니메이션과 관련된 '설정'을 분리된 오브젝트에 작성
+const myVars = {
+  //각 속성들의 이름은 아무거나 상관없음.
+  start: { scale: 0 },
+  end: { scale: 1, rotateZ: 360, transition: { type: "spring" } },
+};
+
 function App() {
   return (
     <Wrapper>
-      <Box
-        transition={{ type: "spring" }} //전환 설정. 다양한 옵션 있음
-        initial={{ scale: 0 }} //초기 상태
-        animate={{ scale: 1, rotateZ: 360 }} //끝 상태
-      />
+      {/* 어떤 variants를 쓸건지, 그 variants의 속성들 중에 어떤걸 가져다 쓸건지 */}
+      <Box variants={myVars} initial="start" animate="end" />
     </Wrapper>
   );
 }
