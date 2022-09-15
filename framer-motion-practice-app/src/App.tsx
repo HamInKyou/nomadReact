@@ -18,19 +18,17 @@ const Box = styled(motion.div)`
 `;
 
 const boxVariants = {
-  hover: { scale: 1.5, rotateZ: 90 },
-  click: { scale: 1, borderRadius: "100px" },
-  drag: { backgroundColor: "rgb(46, 204, 113)", transition: { duration: 1 } },
+  hover: { rotateZ: 90 }, //호버하면 90도 회전하게
+  click: { borderRadius: "100px" }, //클릭하는동안 동그래지게
 };
 
 function App() {
   return (
     <Wrapper>
       <Box
-        drag //이 props를 줌으로써 컴포넌트를 클릭하고 이리저리 끌 수 있음
+        drag="x" //x축으로만 드래그 가능함, "y"로하면 y축으로만 드래그 가능
         variants={boxVariants}
-        whileHover="hover" //마우스 호버했을때 실행할 애니메이션
-        whileDrag="drag" //드래그하는동안 실행할 애니메이션
+        whileHover="hover" //호버하면 실행할 에니메이션
         whileTap="click" //클릭하는 동안 실행할 애니메이션
       />
     </Wrapper>
