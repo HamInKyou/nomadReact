@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect } from "react";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -20,17 +20,21 @@ const Box = styled(motion.div)`
 
 function App() {
   const boxX = useMotionValue(0);
-  //useTransForm은 MotionValue의 변화량에 따라 반응하는 다른 MotionValue를 만들어주는 훅이다.
-  //차례대로 motionValue, 입력값, 출력값이다.
-  //boxX가 -800 이하일때 boxScale은 2, 0일때는 1, 800일 때는 0.1 이렇게 차례대로 매핑
-  //그 순간에 어떤 motionValue를 갖게 될지 설정해준다. 그 사이는 자연스럽게 연결시켜줌!
-  const boxScale = useTransform(boxX, [-800, 0, 800], [2, 1, 0.1]);
+  const boxRotateZ = useTransform(boxX, [-800, 800], [-360, 360]);
+  const gradient = useTransform(
+    boxX,
+    [-800, 800],
+    [
+      "linear-gradient(135deg, rgb(0, 210, 238), rgb(0, 83, 238))",
+      "linear-gradient(135deg, rgb(0, 238, 155), rgb(238, 178, 0))",
+    ]
+  );
   useEffect(() => {
     boxX.onChange(() => console.log(boxX.get()));
   }, [boxX]);
   return (
-    <Wrapper>
-      <Box style={{ x: boxX, scale: boxScale }} drag="x" dragSnapToOrigin />
+    <Wrapper style={{ background: gradient }}>
+      <Box style={{ x: boxX, rotateZ: boxRotateZ }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }
