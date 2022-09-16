@@ -18,9 +18,10 @@ function App() {
     <Wrapper>
       <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <motion.path
-          initial={{ fill: "rgba(255,255,255, 0)" }}
+          initial={{ pathLength: 0, fill: "rgba(255,255,255, 0)" }}
           animate={{
-            fill: "rgba(255,255,255,1)",
+            pathLength: 1,
+            fill: "rgba(255,255,255,0)",
           }}
           transition={{ duration: 3 }}
           stroke="white"
