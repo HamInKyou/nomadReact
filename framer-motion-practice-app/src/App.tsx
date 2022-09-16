@@ -8,6 +8,7 @@ const Wrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
 
 const Box = styled(motion.div)`
@@ -17,43 +18,51 @@ const Box = styled(motion.div)`
   border-radius: 40px;
   position: absolute;
   top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
-const boxVariants = {
-  initial: {
+const box = {
+  invisible: {
+    x: 500,
     opacity: 0,
     scale: 0,
   },
   visible: {
+    x: 0,
     opacity: 1,
     scale: 1,
-    rotateZ: 360,
+    transition: {
+      duration: 0.5,
+    },
   },
-  leaving: {
-    opacity: 0,
-    scale: 0,
-    y: 50,
-  },
+  exit: { x: -500, opacity: 0, scale: 0, transition: { duration: 0.5 } },
 };
 
 function App() {
-  const [showing, setShowing] = useState(false);
-  const toggleShowing = () => setShowing((prev) => !prev);
+  const [visible, setVisible] = useState(1);
+  const nextPlease = () => setVisible((prev) => (prev === 10 ? 10 : prev + 1));
   return (
     <Wrapper>
-      <button onClick={toggleShowing}>Click</button>
-      {/* 컴포넌트 언마운트될때 애니메이션을 주려면 AnimatePresence 컴포넌트로 감싸고, 안에 조건부 렌더링 구문을 포함하자. */}
       <AnimatePresence>
-        {showing ? (
-          <Box
-            variants={boxVariants}
-            initial="initial" //컴포넌트 마운트 되었을 떄 초기 상태
-            animate="visible" //애니메이션 끝 상태
-            exit="leaving" //AnimatePresence에 의해 사용되어질 수 있는 속성, 컴포넌트가 사라질 때 수행할 끝 애니메이션
-          />
-        ) : null}
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) =>
+          i === visible ? (
+            <Box
+              variants={box}
+              initial="invisible" //컴포넌트 마운트 되었을때 애나메이션 초기값 (해당 슬라이드 오른쪽에서 생겨남)
+              animate="visible" //애니메이션 마침점 (해당 슬라이드 중간으로 옴)
+              exit="exit" // 컴포넌트 언마운트 되기 전 ( 해당 슬라이드 왼쪽으로 사라짐)
+              key={i}
+            >
+              {i}
+            </Box>
+          ) : null
+        )}
       </AnimatePresence>
+      <button onClick={nextPlease}>next</button>
     </Wrapper>
   );
 }
