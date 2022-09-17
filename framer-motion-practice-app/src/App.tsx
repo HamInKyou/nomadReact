@@ -63,16 +63,15 @@ const overlay = {
 };
 
 interface Ibox {
-  transformOrigin: string;
+  x: number;
+  y: number;
 }
 const box = {
-  normal: ({ transformOrigin }: Ibox) => ({
-    scale: 1,
-    transformOrigin,
-  }),
-  hover: {
+  hover: ({ x, y }: Ibox) => ({
     scale: 1.1,
-  },
+    x,
+    y,
+  }),
 };
 
 function App() {
@@ -86,39 +85,33 @@ function App() {
       <Grid>
         <Box
           variants={box}
-          initial="normal"
           whileHover="hover"
           onClick={() => setId("top-left")}
           layoutId={"top-left"}
-          custom={{ transformOrigin: "bottom right" }}
+          custom={{ x: -20, y: -10 }}
         />
         <Box
           variants={box}
-          initial="normal"
           whileHover="hover"
-          onClick={() => setId("top-right")}
           layoutId={"top-right"}
-          custom={{ transformOrigin: "bottom left" }}
+          custom={{ x: 20, y: -10 }}
         >
           {isLocatedTopRight && <Circle layoutId={"circle"} />}
         </Box>
         <Box
           variants={box}
-          initial="normal"
           whileHover="hover"
-          onClick={() => setId("bottom-left")}
           layoutId={"bottom-left"}
-          custom={{ transformOrigin: "top right" }}
+          custom={{ x: -20, y: 10 }}
         >
           {!isLocatedTopRight && <Circle layoutId={"circle"} />}
         </Box>
         <Box
           variants={box}
-          initial="normal"
           whileHover="hover"
           onClick={() => setId("bottom-right")}
           layoutId={"bottom-right"}
-          custom={{ transformOrigin: "top left" }}
+          custom={{ x: 20, y: 10 }}
         />
       </Grid>
       <ChangeButton
