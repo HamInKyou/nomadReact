@@ -6,26 +6,33 @@ const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 50vw;
+  grid-template-columns: repeat(2, 1fr);
+  width: 810px;
   gap: 10px;
-  div:first-child,
-  div:last-child {
-    grid-column: span 2;
-  }
 `;
 
 const Box = styled(motion.div)`
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
   height: 200px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const Circle = styled(motion.div)`
+  background-color: #ffffff;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  border-radius: 25px;
 `;
 
 const Overlay = styled(motion.div)`
@@ -37,24 +44,93 @@ const Overlay = styled(motion.div)`
   align-items: center;
 `;
 
+const ChangeButton = styled(motion.button)`
+  margin-top: 30px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  padding: 5px 10px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  transition-duration: 0.2s;
+  cursor: pointer;
+`;
 const overlay = {
   hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
   visible: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
   exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
 };
 
+interface Ibox {
+  transformOrigin: string;
+}
+const box = {
+  normal: ({ transformOrigin }: Ibox) => ({
+    scale: 1,
+    transformOrigin,
+  }),
+  hover: {
+    scale: 1.1,
+  },
+};
+
 function App() {
   const [id, setId] = useState<null | string>(null);
+  const [isLocatedTopRight, setIsLocatedTopRight] = useState<boolean>(true);
+  const toggleIsLocatedTopRight = () => {
+    setIsLocatedTopRight((prev) => !prev);
+  };
   return (
     <Wrapper>
       <Grid>
-        {["1", "2", "3", "4"].map((n) => (
-          <Box onClick={() => setId(n)} key={n} layoutId={n} /> //각각의 박스에 다른 layoutId 부여
-        ))}
+        <Box
+          variants={box}
+          initial="normal"
+          whileHover="hover"
+          onClick={() => setId("top-left")}
+          layoutId={"top-left"}
+          custom={{ transformOrigin: "bottom right" }}
+        />
+        <Box
+          variants={box}
+          initial="normal"
+          whileHover="hover"
+          onClick={() => setId("top-right")}
+          layoutId={"top-right"}
+          custom={{ transformOrigin: "bottom left" }}
+        >
+          {isLocatedTopRight && <Circle layoutId={"circle"} />}
+        </Box>
+        <Box
+          variants={box}
+          initial="normal"
+          whileHover="hover"
+          onClick={() => setId("bottom-left")}
+          layoutId={"bottom-left"}
+          custom={{ transformOrigin: "top right" }}
+        >
+          {!isLocatedTopRight && <Circle layoutId={"circle"} />}
+        </Box>
+        <Box
+          variants={box}
+          initial="normal"
+          whileHover="hover"
+          onClick={() => setId("bottom-right")}
+          layoutId={"bottom-right"}
+          custom={{ transformOrigin: "top left" }}
+        />
       </Grid>
-      {/* 언마운트될때 애니메이션으로 부드럽게 사라지게 AnimatePresence로 감쌌다! */}
+      <ChangeButton
+        onClick={toggleIsLocatedTopRight}
+        style={{
+          scale: isLocatedTopRight ? "1" : "1.2",
+          color: isLocatedTopRight ? "#008DC0" : "#F0C200",
+        }}
+      >
+        Switch
+      </ChangeButton>
       <AnimatePresence>
-        {/* 조건부 렌더링으로 박스가 선택 되었을 때 Overlay가 뜨게! */}
         {id ? (
           <Overlay
             variants={overlay}
@@ -63,8 +139,14 @@ function App() {
             animate="visible"
             exit="exit"
           >
-            {/* 이 박스에 동적으로 layoutId를 부여함으로써, 위에 만든 박스들이랑 동적으로 연결시켜준다! */}
-            <Box layoutId={id} style={{ width: 400, height: 200 }} />
+            <Box
+              layoutId={id}
+              style={{
+                width: 400,
+                height: 200,
+                backgroundColor: "rgba(255, 255, 255, 1)",
+              }}
+            />
           </Overlay>
         ) : null}
       </AnimatePresence>
