@@ -1,49 +1,70 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const Boards = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(1, 1fr);
+`;
+
+const Board = styled.div`
+  padding: 20px 10px;
+  padding-top: 30px;
+  background-color: ${(props) => props.theme.boardColor};
+  border-radius: 5px;
+  min-height: 200px;
+`;
+
+const Card = styled.div`
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 10px 10px;
+  background-color: ${(props) => props.theme.cardColor};
+`;
+
+const toDos = ["a", "b", "c", "d", "e", "f"];
 
 function App() {
   const onDragEnd = () => {};
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <Droppable droppableId="one">
-          {/* 
-          Droppable의 자식으로 쓰이는 함수
-          첫번째 인자 magic -> 공식 예제에선 provided라고 썼지만, 이름 바꿔도 상관없다는걸 알 수 있다.
-          첫번째 인자 magic 객체는 innerRef와 droppableProps를 갖고 있다.
-          */}
-          {(magic) => (
-            <ul ref={magic.innerRef} {...magic.droppableProps}>
-              <Draggable draggableId="first" index={0}>
-                {/* 
-                Draggable의 자식으로 쓰이는 함수
-                첫번째 인자 magic -> 공식 예제에선 provided라고 썼지만, 이름 바꿔도 상관없다는걸 알 수 있다.
-                첫번째 인자 magic 객체는 innerRef와 draggableProps와 dragHandleProps를 갖고 있다.
-                Draggable로 감싼 요소를 드래그하고 싶을 때, draggableProps를 할당해주어 드래그할 수 있게 설정한다.
-                Draggable로 감싼 요소 중에 ragHandleProps를 할당해주어야 그 요소를 잡고 드래그 할 수 있게 된다!(할당 안하면 드래그 안됨!)
-                */}
-                {(magic) => (
-                  <li
-                    ref={magic.innerRef}
-                    {...magic.draggableProps}
-                    {...magic.dragHandleProps}
-                  >
-                    <span>🔥</span>
-                    One
-                  </li>
-                )}
-              </Draggable>
-              <Draggable draggableId="second" index={1}>
-                {(magic) => (
-                  <li ref={magic.innerRef} {...magic.draggableProps}>
-                    <span {...magic.dragHandleProps}>🔥</span>
-                    Two
-                  </li>
-                )}
-              </Draggable>
-            </ul>
-          )}
-        </Droppable>
-      </div>
+      <Wrapper>
+        <Boards>
+          <Droppable droppableId="one">
+            {(magic) => (
+              <Board ref={magic.innerRef} {...magic.droppableProps}>
+                {toDos.map((toDo, index) => (
+                  <Draggable draggableId={toDo} index={index}>
+                    {(magic) => (
+                      <Card
+                        ref={magic.innerRef}
+                        {...magic.dragHandleProps}
+                        {...magic.draggableProps}
+                      >
+                        {toDo}
+                      </Card>
+                    )}
+                  </Draggable>
+                ))}
+                {/* magic.placeholder를 droppalbeProps를 할당한 자식의 맨 뒤에 넣으면
+                Draggable한 요소가 드래그 중일 때 droppable한 요소의 크기가 변화하지 않는다!
+                드래그하는동안 그 요소가 빠졌다고 취급하지 않는것. */}
+                {magic.placeholder}
+              </Board>
+            )}
+          </Droppable>
+        </Boards>
+      </Wrapper>
     </DragDropContext>
   );
 }
