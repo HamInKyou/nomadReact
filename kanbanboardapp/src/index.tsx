@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <>
     <Reset />
     <RecoilRoot>
       <ThemeProvider theme={darkTheme}>
@@ -19,5 +19,5 @@ root.render(
         <App />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>
+  </>
 );
