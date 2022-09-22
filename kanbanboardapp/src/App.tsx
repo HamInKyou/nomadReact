@@ -32,9 +32,10 @@ function App() {
       setToDos((allBoards) => {
         //allBoards 업데이트
         const boardCopy = [...allBoards[source.droppableId]]; //보드 하나 복사본 뜨기
+        const taskObj = boardCopy[source.index]; //해당 보드에서 해당 index의 객체 구하기
         //복사본 뜬거에 수정하기
         boardCopy.splice(source.index, 1);
-        boardCopy.splice(destination?.index, 0, draggableId);
+        boardCopy.splice(destination?.index, 0, taskObj);
 
         //업데이트하기
         return {
@@ -47,9 +48,10 @@ function App() {
       // 다른 보드로 드래그앤 드롭했을경우
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]]; //시작 복사본 만들기
+        const taskObj = sourceBoard[source.index]; //index를 활용해서 옮기고자하는 객체 가져오기
         const destinationBoard = [...allBoards[destination.droppableId]]; //목적지 복사본 만들기
         sourceBoard.splice(source.index, 1); //시작에서 지우고
-        destinationBoard.splice(destination?.index, 0, draggableId); //목적지에 추가하기
+        destinationBoard.splice(destination?.index, 0, taskObj); //목적지에 추가하기
         //지우고 추가한 복사본 보드들을 업데이트하기
         return {
           ...allBoards,

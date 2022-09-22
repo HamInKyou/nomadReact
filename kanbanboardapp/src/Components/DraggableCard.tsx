@@ -13,14 +13,14 @@ const Card = styled.div<{ isDragging: boolean }>`
 `;
 
 interface IDragableCardProps {
-  toDo: string;
+  toDoId: number;
+  toDoText: string;
   index: number;
 }
 
-function DraggableCard({ toDo, index }: IDragableCardProps) {
-  console.log(toDo, "has been rendered");
+function DraggableCard({ toDoId, toDoText, index }: IDragableCardProps) {
   return (
-    <Draggable key={toDo} draggableId={toDo} index={index}>
+    <Draggable draggableId={toDoId + ""} index={index}>
       {(magic, snapshot) => (
         //snapshot.isRragging은 해당 요소가 드래그 중이면 true
         <Card
@@ -29,7 +29,7 @@ function DraggableCard({ toDo, index }: IDragableCardProps) {
           {...magic.dragHandleProps}
           {...magic.draggableProps}
         >
-          {toDo}
+          {toDoText}
         </Card>
       )}
     </Draggable>
