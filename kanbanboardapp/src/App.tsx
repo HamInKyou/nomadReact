@@ -6,8 +6,7 @@ import Board from "./Components/Board";
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 680px;
-  width: 100%;
+  width: 100vw;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -15,26 +14,34 @@ const Wrapper = styled.div`
 `;
 
 const Boards = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
   gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
 `;
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    if (!destination) return;
-    // setToDos((oldToDos) => {
-    //   const toDosCopy = [...oldToDos];
-    //   // 1) Delete item on source.index 시작 위치의 요소 지우기
-    //   console.log("Delete item on", source.index);
-    //   toDosCopy.splice(source.index, 1);
-    //   // 2) Put back the item on the destination.index 종료 위치에 생성하기
-    //   toDosCopy.splice(destination?.index, 0, draggableId);
-    //   console.log(toDosCopy);
-    //   return toDosCopy;
-    //
+  const onDragEnd = (info: DropResult) => {
+    //목적지에 대한 정보, 드래그하는 요소의 정보, 시작지에 대한 정보
+    const { destination, draggableId, source } = info;
+    if (destination?.droppableId === source.droppableId) {
+      // 같은 보드 내에서 드래그앤 드롭했을 경우
+      setToDos((allBoards) => {
+        //allBoards 업데이트
+        const boardCopy = [...allBoards[source.droppableId]]; //보드 하나 복사본 뜨기
+        //복사본 뜬거에 수정하기
+        boardCopy.splice(source.index, 1);
+        boardCopy.splice(destination?.index, 0, draggableId);
+
+        //업데이트하기
+        return {
+          ...allBoards,
+          [source.droppableId]: boardCopy,
+        };
+      });
+    }
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
