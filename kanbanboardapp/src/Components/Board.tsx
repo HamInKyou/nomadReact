@@ -1,6 +1,7 @@
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import DraggableCard from "./DraggableCard";
+import { useRef } from "react";
 
 const Wrapper = styled.div`
   width: 300px;
@@ -42,9 +43,19 @@ interface IBoardProps {
 }
 
 function Board({ toDos, boardId }: IBoardProps) {
+  //ref : 자바스크립트로부터 html 요소를 지정하고, 가져올 수 있는 방법
+  const inputRef = useRef<HTMLInputElement>(null);
+  const onClick = () => {
+    inputRef.current?.focus();
+    setTimeout(() => {
+      inputRef.current?.blur();
+    }, 5000);
+  };
   return (
     <Wrapper>
       <Title>{boardId}</Title>
+      <input ref={inputRef} placeholder="grab me" />
+      <button onClick={onClick}>click me</button>
       <Droppable droppableId={boardId}>
         {(magic, snapshot) => (
           //snapshot.isDraggingOver  : 유저가 어떤 요소 드래그해서 해당 보드 집입했을시 활성화
